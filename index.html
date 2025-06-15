@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Damage Re-Cut Requisition System</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <img src="https://i.ibb.co/JwTtp3KK/Logo.png" alt="Company Logo" class="logo">
+      </div>
+      <h1>Damage Re-Cut Requisition System</h1>
+      <p class="subtitle">Submit requests for panel recuts due to damage or defects</p>
+    </div>
+
+    <div id="message-container"></div>
+
+    <div class="main-content">
+      <div class="form-section">
+        <form id="damageRecutForm">
+          <div class="form-header">
+            <h3 class="section-title">Request Information</h3>
+            <p class="section-subtitle">Please provide details about your recut request</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="gliderName">Glider Name <span class="required">*</span></label>
+              <input type="text" id="gliderName" name="gliderName" placeholder="Enter glider model name" required>
+            </div>
+            <div class="form-group">
+              <label for="orderNumber">Order Number <span class="required">*</span></label>
+              <input type="text" id="orderNumber" name="orderNumber" placeholder="Enter order number" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reason">Reason <span class="required">*</span></label>
+            <select id="reason" name="reason" required onchange="handleReasonChange()">
+              <option value="">Select reason for panel recut</option>
+              <option value="Incorrect Cutting Tolerance">Incorrect Cutting Tolerance</option>
+              <option value="Sewing Damage">Sewing Damage</option>
+              <option value="Mismatch in Colors">Mismatch in Colors</option>
+              <option value="Pattern Issue">Pattern Issue</option>
+              <option value="Incorrect Print">Incorrect Print</option>
+              <option value="Quality Control Rejection">Quality Control Rejection</option>
+              <option value="Porosity Test Failure">Porosity Test Failure</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Custom reason input field (hidden by default) -->
+          <div class="form-group" id="customReasonGroup" style="display: none;">
+            <label for="customReason">Please specify the reason <span class="required">*</span></label>
+            <input type="text" id="customReason" name="customReason" placeholder="Enter custom reason for panel recut..." maxlength="200" oninput="updateCharacterCount()">
+            <div class="character-count" id="characterCount">0/200 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label for="requestedBy">Requested By <span class="required">*</span></label>
+            <input type="text" id="requestedBy" name="requestedBy" placeholder="Enter name of person requesting the recut" required>
+          </div>
+
+          <div class="form-header">
+            <h3 class="section-title">Panel Information</h3>
+            <p class="section-subtitle">Add one or more panels that need to be recut</p>
+          </div>
+
+          <button type="button" class="add-panel" onclick="addPanel()">
+            <span class="icon">+</span> Add Panel
+          </button>
+
+          <div id="panels-container">
+            <!-- Panels will be added here dynamically -->
+          </div>
+
+          <div class="form-group">
+            <label for="additionalNotes">Additional Notes</label>
+            <textarea id="additionalNotes" name="additionalNotes" placeholder="Any additional information or special requests..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Submit Panel Recut Request</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="recent-section">
+      <div class="recent-header">
+        <h3 class="section-title">Recent Requests</h3>
+        <p class="section-subtitle">Your recent damage recut submissions</p>
+        <div style="float: right; margin-top: -24px;">
+          <button onclick="testBackend()" style="padding: 6px 12px; background: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 8px;">🔧 Test</button>
+          <button onclick="loadRecentRequests()" style="padding: 6px 12px; background: #1e88e5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">🔄 Refresh</button>
+        </div>
+      </div>
+      <div class="recent-content">
+        <div id="recent-requests">
+          <div class="recent-requests">
+            <div class="recent-icon">📋</div>
+            <p>No damage requests yet</p>
+            <p class="subtitle">Submitted requests will appear here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
